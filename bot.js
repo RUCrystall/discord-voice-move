@@ -19,7 +19,6 @@ client.on('message', message => {
 					});
 					if (membersToMove.length) {
 						membersToMove.forEach(m => {
-							message.reply(m.id);
 							m.setVoiceChannel(channel);
 						});
 					} else {
@@ -37,10 +36,11 @@ client.on('message', message => {
     }
 });
 
-function getChannelByName(message, findByName) {
-	let voiceChannel = message.guild.channels.find(c => c.id === findByName);
+function getChannelByName(message, name) {
+	message.reply(name);
+	let voiceChannel = message.guild.channels.find(c => c.id === name);
 	if (voiceChannel === null) {
-		voiceChannel = message.guild.channels.find(c => c.name.toLowerCase() === findByName.toLowerCase() && c.type === 'voice');
+		voiceChannel = message.guild.channels.find(c => c.name.toLowerCase() === name.toLowerCase() && c.type === 'voice');
 	}
 	return voiceChannel;
 }
