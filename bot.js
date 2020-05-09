@@ -14,7 +14,7 @@ client.on('message', message => {
 				const channel = getChannelByName(message, args[1]);
 				if (channel) {
 					const membersToMove = messageMentions.filter(m => {
-						const member = message.guild.members.get(m.id);
+						const member = message.guild.members.cache.get(m.id);
 						if (member.voiceChannelID != null && member.voiceChannelID != channel.id) return true;
 					});
 					if (membersToMove.length) {
@@ -37,10 +37,9 @@ client.on('message', message => {
 });
 
 function getChannelByName(message, name) {
-	message.reply(name);
-	let voiceChannel = message.guild.channels.find(c => c.id === name);
+	let voiceChannel = message.guild.channels.cache.find(c => c.id === name);
 	if (voiceChannel === null) {
-		voiceChannel = message.guild.channels.find(c => c.name.toLowerCase() === name.toLowerCase() && c.type === 'voice');
+		voiceChannel = message.guild.channels.cache.find(c => c.name.toLowerCase() === name.toLowerCase() && c.type === 'voice');
 	}
 	return voiceChannel;
 }
