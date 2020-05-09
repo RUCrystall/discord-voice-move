@@ -1,0 +1,13 @@
+{
+  "name": "discord-voice-move",
+  "description": "Move clients to selected voice channels using this bot",
+  "version": "0.0.1",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "discord.js": "12.2.0",
+    "request": "2.81.0"
+  }
+}
