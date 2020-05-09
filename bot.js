@@ -37,10 +37,10 @@ client.on('message', message => {
 });
 
 function getChannelByName(message, name) {
-	console.log(message.guild.channels.cache);
-	let voiceChannel = message.guild.channels.cache.find(c => c.id === name);
+	const channelCache = message.guild.channels.cache.array().filter(c => c.type === 'voice');
+	let voiceChannel = channelCache.find(c => c.id === name);
 	if (voiceChannel === null) {
-		voiceChannel = message.guild.channels.cache.find(c => c.name.toLowerCase() === name.toLowerCase() && c.type === 'voice');
+		voiceChannel = channelCache.find(c => c.name.toLowerCase() === name.toLowerCase());
 	}
 	return voiceChannel;
 }
