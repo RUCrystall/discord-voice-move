@@ -25,8 +25,6 @@ client.on('message', message => {
 				} else {
 					log(message, 'Channel not found.');
 				}
-			} else {
-				log(message, 'Not all arguments provided.');
 			}
 		});
     }
