@@ -13,10 +13,7 @@ client.on('message', message => {
 			if (args.length > 2) {
 				const channel = getChannelByName(message, args[1]);
 				if (channel) {
-					const membersToMove = messageMentions.filter(m => {
-						const member = message.guild.members.cache.get(m.id);
-						if (member.voiceChannelID != null && member.voiceChannelID != channel.id) return true;
-					});
+					const membersToMove = messageMentions.filter(m => m.voiceChannelID != null && m.voiceChannelID != channel.id);
 					if (membersToMove.length) {
 						membersToMove.forEach(m => {
 							m.voice.setChannel(channel);
