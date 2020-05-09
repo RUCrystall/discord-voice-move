@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const isSilent = false;
 
 client.on('ready', () => {
     console.log('discord-voice-move ready. blip-blop!');
@@ -13,22 +14,21 @@ client.on('message', message => {
 			if (args.length > 2) {
 				const channel = getChannelByName(message, args[1]);
 				if (channel) {
-					console.log(messageMentions);
 					const membersToMove = messageMentions.filter(m => m.voice.channelID != null && m.voice.channelID != channel.id);
 					if (membersToMove.length) {
 						membersToMove.forEach(m => {
 							m.voice.setChannel(channel);
 						});
-					} else {
+					} else if (!isSilent) {
 						message.reply('No members to move.');
 					}
-				} else {
+				} else if (!isSilent) {
 					message.reply('Channel not found.');
 				}
-			} else {
+			} else if (!isSilent) {
 				message.reply('Not all arguments provided.');
 			}
-		} else {
+		} else if (!isSilent) {
 			message.reply('There are no mentions in the message.');
 		}
     }
