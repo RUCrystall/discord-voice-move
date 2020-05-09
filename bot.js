@@ -19,6 +19,7 @@ client.on('message', message => {
 					});
 					if (membersToMove.length) {
 						membersToMove.forEach(m => {
+							message.reply(m.id);
 							m.setVoiceChannel(channel);
 						});
 					} else {
