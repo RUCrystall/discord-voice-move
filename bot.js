@@ -31,7 +31,7 @@ client.on('message', message => {
     } else if (message.content === '!clear') {
 		(async function() {
             message.delete();
-            message.channel.bulkDelete(await message.channel.fetchMessages({ limit: 100 }));
+            message.channel.bulkDelete(await message.channel.messages.fetch({ limit: 100 }));
         })();
 	}
 });
