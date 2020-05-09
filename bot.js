@@ -15,23 +15,23 @@ client.on('message', message => {
 					const channel = getChannelByName(message, args[0]);
 					console.log(args[1]);
 					if (channel) {
-						const membersToMove = messageMentions.filter(m => m.voice.channelID != null && m.voice.channelID != channel.id);
+						const membersToMove = messageMentions.filter(m => args[1].contains(m.id) && m.voice.channelID != null && m.voice.channelID != channel.id);
 						if (membersToMove.length) {
 							membersToMove.forEach(m => {
 								m.voice.setChannel(channel);
 							});
 						} else {
-							log('No members to move.');
+							log(message, 'No members to move.');
 						}
 					} else {
-						log('Channel not found.');
+						log(message, 'Channel not found.');
 					}
 				} else {
-					log('Not all arguments provided.');
+					log(message, 'Not all arguments provided.');
 				}
 			});
 		} else {
-			log('There are no mentions in the message.');
+			log(message, 'There are no mentions in the message.');
 		}
     }
 });
