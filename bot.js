@@ -7,31 +7,27 @@ client.on('ready', () => {
 
 client.on('message', message => {
     if (message.content.startsWith('!move ')) {
-		let messageMentions = message.mentions.members.array();
-		if (messageMentions.length) {
-			message.content.substring(6).split('||').forEach(opts => {
-				const args = opts.trim().split(/ +/g);
-				if (args.length == 2) {
-					const channel = getChannelByName(message, args[0]);
-					if (channel) {
-						const membersToMove = messageMentions.filter(m => args[1].includes(m.id) && m.voice.channelID != null && m.voice.channelID != channel.id);
-						if (membersToMove.length) {
-							membersToMove.forEach(m => {
-								m.voice.setChannel(channel);
-							});
-						} else {
-							log(message, 'No members to move.');
-						}
+		message.content.substring(6).split('||').forEach(opts => {
+			const args = opts.trim().split(/ +/g);
+			if (args.length == 2) {
+				const channel = getChannelByName(message, args[0]);
+				if (channel) {
+					const members = args[1].match(/<(\d+)>/g).map(m => message.guild.members.fetch(m.substring(1).slice(0, -1)));
+					const membersToMove = members.filter(m => m.voice.channelID != null && m.voice.channelID != channel.id);
+					if (membersToMove.length) {
+						membersToMove.forEach(m => {
+							m.voice.setChannel(channel);
+						});
 					} else {
-						log(message, 'Channel not found.');
+						log(message, 'No members to move.');
 					}
 				} else {
-					log(message, 'Not all arguments provided.');
+					log(message, 'Channel not found.');
 				}
-			});
-		} else {
-			log(message, 'There are no mentions in the message.');
-		}
+			} else {
+				log(message, 'Not all arguments provided.');
+			}
+		});
     }
 });
 
