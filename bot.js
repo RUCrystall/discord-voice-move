@@ -13,7 +13,6 @@ client.on('message', message => {
 				const args = opts.trim().split(/ +/g);
 				if (args.length == 2) {
 					const channel = getChannelByName(message, args[0]);
-					console.log(args[1]);
 					if (channel) {
 						const membersToMove = messageMentions.filter(m => args[1].includes(m.id) && m.voice.channelID != null && m.voice.channelID != channel.id);
 						if (membersToMove.length) {
