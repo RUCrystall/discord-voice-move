@@ -17,11 +17,21 @@ client.on('message', message => {
 						const member = message.guild.members.get(m.id);
 						if (member.voiceChannelID != null && member.voiceChannelID != channel.id) return true;
 					});
-					membersToMove.forEach(m => {
-						m.setVoiceChannel(channel);
-					});
+					if (membersToMove.length) {
+						membersToMove.forEach(m => {
+							m.setVoiceChannel(channel);
+						});
+					} else {
+						message.reply('No members to move.');
+					}
+				} else {
+					message.reply('Channel not found.');
 				}
+			} else {
+				message.reply('Not all arguments provided.');
 			}
+		} else {
+			message.reply('There are no mentions in the message.');
 		}
     }
 });
