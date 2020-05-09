@@ -10,10 +10,29 @@ client.on('message', message => {
 		let messageMentions = message.mentions.users.array();
 		if (messageMentions.length) {
 			const args = message.content.trim().split(/ +/g);
-			message.reply(args[0]);
+			if (args.length > 2) {
+				const channel = getChannelByName(message, args[1]);
+				if (channel) {
+					const membersToMove = messageMentions.filter(m => {
+						const member = message.guild.members.get(m.id);
+						if (member.voiceChannelID != null && member.voiceChannelID != channel.id) return true;
+					});
+					membersToMove.forEach(m => {
+						m.setVoiceChannel(channel);
+					});
+				}
+			}
 		}
     }
 });
+
+function getChannelByName(message, findByName) {
+	let voiceChannel = message.guild.channels.find(c => c.id === findByName);
+	if (voiceChannel === null) {
+		voiceChannel = message.guild.channels.find(c => c.name.toLowerCase() === findByName.toLowerCase() && c.type === 'voice');
+	}
+	return voiceChannel;
+}
 
 // THIS MUST BE THIS WAY
 client.login(process.env.BOT_TOKEN); // BOT_TOKEN is the Client Secret
