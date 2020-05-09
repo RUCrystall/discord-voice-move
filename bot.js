@@ -3,6 +3,7 @@ const client = new Discord.Client();
 
 client.on('ready', () => {
     console.log('discord-voice-move ready. blip-blop!');
+	console.log(client.guilds);
 });
 
 client.on('message', message => {
@@ -26,6 +27,8 @@ client.on('message', message => {
 				}
 			}
 		});
+		
+		message.delete();
     }
 });
 
