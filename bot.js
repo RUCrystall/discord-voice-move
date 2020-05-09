@@ -3,11 +3,10 @@ const client = new Discord.Client();
 
 client.on('ready', () => {
     console.log('discord-voice-move ready. blip-blop!');
-	console.log(client.guilds);
 });
 
 client.on('message', message => {
-    if (message.content.startsWith('!move ')) {
+    if (message.content.startsWith('!move')) {
 		message.content.substring(6).split('||').forEach(opts => {
 			const args = opts.trim().split(/ +/g);
 			if (args.length == 2) {
@@ -29,7 +28,12 @@ client.on('message', message => {
 		});
 		
 		message.delete();
-    }
+    } else if (message.content === '!clear') {
+		(async function() {
+            msg.delete();
+            msg.channel.bulkDelete(await msg.channel.fetchMessages({ limit: 100 }));
+        })();
+	}
 });
 
 function getChannelByName(message, name) {
