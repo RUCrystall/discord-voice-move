@@ -14,7 +14,7 @@ client.on('message', message => {
 				const channel = getChannelByName(message, args[1]);
 				if (channel) {
 					console.log(messageMentions);
-					const membersToMove = messageMentions.filter(m => m.voiceChannelID != null && m.voiceChannelID != channel.id);
+					const membersToMove = messageMentions.filter(m => m.voice.channelID != null && m.voice.channelID != channel.id);
 					if (membersToMove.length) {
 						membersToMove.forEach(m => {
 							m.voice.setChannel(channel);
