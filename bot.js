@@ -7,7 +7,7 @@ client.on('ready', () => {
 
 client.on('message', message => {
     if (message.content.startsWith('!move')) {
-		let messageMentions = message.mentions.member.array();
+		let messageMentions = message.mentions.members.array();
 		if (messageMentions.length) {
 			const args = message.content.trim().split(/ +/g);
 			if (args.length > 2) {
