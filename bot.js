@@ -12,7 +12,6 @@ client.on('message', message => {
 			if (args.length == 2) {
 				const channel = getChannelByName(message, args[0]);
 				if (channel) {
-					console.log(args[1]);
 					const members = args[1].match(/<(\d+)>/g).map(match => message.guild.members.cache.find(m => m.id === match.substring(1).slice(0, -1)));
 					const membersToMove = members.filter(m => m && m.voice.channelID != null && m.voice.channelID != channel.id);
 					if (membersToMove.length) {
